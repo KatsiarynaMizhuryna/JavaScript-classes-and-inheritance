@@ -3,13 +3,13 @@ function BaseBuilder(value) {
   this.value = value;
 }
 //common methods:
-BaseBuilder.prototype.plus = function (...n) {
-  let sum = 0;
-  n.forEach((item) => (sum += item));
+BaseBuilder.prototype.plus = function () {
+  var n = Array.from(arguments);
+  var sum = n.reduce((acc, item) => (acc += item));
   this.value = this.value + sum;
   return this;
 };
-BaseBuilder.prototype.minus = function (...n) {};
+BaseBuilder.prototype.minus = function (n) {};
 BaseBuilder.prototype.multiply = function (n) {};
 BaseBuilder.prototype.divide = function (n) {};
 BaseBuilder.prototype.get = function () {
@@ -53,7 +53,7 @@ function StringBuilder(value) {
 StringBuilder.prototype = Object.create(BaseBuilder.prototype);
 StringBuilder.prototype.constructor = StringBuilder;
 
-StringBuilder.prototype.minus = function (...n) {
+StringBuilder.prototype.minus = function (n) {
   this.value = this.value.slice(0, -n);
   return this;
 };
