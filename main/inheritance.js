@@ -1,55 +1,39 @@
-class BaseBuilder {
-  constructor(value) {
-    this.value = value;
-  }
-
-  plus(...n) {
-    let sum = 0;
-    n.forEach((item) => (sum += item));
-    this.value = this.value + sum;
-    return this;
-  }
-
-  minus(...n) {
-    if (typeof this.value === "number") {
-      this.value = n.reduce((acc, item) => {
-        return acc - item;
-      }, this.value);
-    }
-    if (typeof this.value === "string") {
-      this.value = this.value.slice(0, -n);
-    }
-    return this;
-  }
-
-  multiply(n) {
-    if (typeof this.value === "number") {
-      this.value = this.value * n;
-    }
-    if (typeof this.value === "string") {
-      this.value = this.value.repeat(n);
-    }
-    return this;
-  }
-
-  divide(n) {
-    if (typeof this.value === "number") {
-      this.value = Math.trunc(this.value / n);
-    }
-    if (typeof this.value === "string") {
-      this.value = this.value.slice(0, n);
-    }
-    return this;
-  }
-
-  get() {
-    return this.value;
-  }
+//Created a Base class ES5:
+function BaseBuilder(value) {
+  this.value = value;
 }
+//common methods:
+BaseBuilder.prototype.plus = function (...n) {
+  let sum = 0;
+  n.forEach((item) => (sum += item));
+  this.value = this.value + sum;
+  return this;
+};
+BaseBuilder.prototype.minus = function (...n) {};
+BaseBuilder.prototype.multiply = function (n) {};
+BaseBuilder.prototype.divide = function (n) {};
+BaseBuilder.prototype.get = function () {
+  return this.value;
+};
+
 //ES6 class IntBuilder:
 class IntBuilder extends BaseBuilder {
   constructor(value = 0) {
     super(value);
+  }
+  minus(...n) {
+    this.value = n.reduce((acc, item) => {
+      return acc - item;
+    }, this.value);
+    return this;
+  }
+  multiply(n) {
+    this.value = this.value * n;
+    return this;
+  }
+  divide(n) {
+    this.value = Math.trunc(this.value / n);
+    return this;
   }
   static random(from, to) {
     from = Math.trunc(from);
@@ -61,12 +45,28 @@ class IntBuilder extends BaseBuilder {
     return this;
   }
 }
+
 //ES5 class StringBuilder:
 function StringBuilder(value) {
   this.value = value;
 }
 StringBuilder.prototype = Object.create(BaseBuilder.prototype);
 StringBuilder.prototype.constructor = StringBuilder;
+
+StringBuilder.prototype.minus = function (...n) {
+  this.value = this.value.slice(0, -n);
+  return this;
+};
+
+StringBuilder.prototype.multiply = function (n) {
+  this.value = this.value.repeat(n);
+  return this;
+};
+
+StringBuilder.prototype.divide = function (n) {
+  this.value = this.value.slice(0, n);
+  return this;
+};
 
 StringBuilder.prototype.remove = function (str) {
   this.value = this.value
@@ -80,7 +80,6 @@ StringBuilder.prototype.sub = function (from, n) {
   this.value = this.value.substr(from, n);
   return this;
 };
-
 // EXAMPLE:
 IntBuilder.random(10, 100);
 
