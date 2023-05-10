@@ -5,7 +5,9 @@ function BaseBuilder(value) {
 //common methods:
 BaseBuilder.prototype.plus = function () {
   var n = Array.from(arguments);
-  var sum = n.reduce((acc, item) => (acc += item));
+  var sum = n.reduce(function (acc, item) {
+    return (acc += item);
+  });
   this.value = this.value + sum;
   return this;
 };
@@ -71,7 +73,9 @@ StringBuilder.prototype.divide = function (n) {
 StringBuilder.prototype.remove = function (str) {
   this.value = this.value
     .split("")
-    .filter((item) => item !== str)
+    .filter(function (item) {
+      return item !== str;
+    })
     .join("");
   return this;
 };
