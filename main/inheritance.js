@@ -84,14 +84,31 @@ StringBuilder.prototype.sub = function (from, n) {
   this.value = this.value.substr(from, n);
   return this;
 };
-// EXAMPLE:
+// EXAMPLE  for static random method:
 IntBuilder.random(10, 100);
+console.log(IntBuilder.random(10, 100));
 
+// EXAMPLE 1 for IntBuilder with METHOD CHAINING:
 let intBuilder = new IntBuilder(10);
 intBuilder.plus(2, 3, 2).minus(1, 2).multiply(2).divide(4).mod(3).get();
 console.log(intBuilder);
 
-// EXAMPLE:
+// EXAMPLE 2 for IntBuilder without METHOD CHAINING:
+let intBuilder2 = new IntBuilder(8);
+intBuilder2.plus(5, 4, 3);
+console.log(intBuilder2);
+intBuilder2.minus(2, 1);
+console.log(intBuilder2);
+intBuilder2.multiply(3);
+console.log(intBuilder2);
+intBuilder2.divide(5);
+console.log(intBuilder2);
+intBuilder2.mod(3);
+console.log(intBuilder2);
+intBuilder2.get();
+console.log(intBuilder2);
+
+// EXAMPLE 1 for strBuilder with METHOD CHAINING:
 let strBuilder = new StringBuilder("Hello");
 strBuilder
   .plus(" all", "!")
@@ -102,3 +119,20 @@ strBuilder
   .sub(1, 1)
   .get();
 console.log(strBuilder);
+
+// EXAMPLE 2 for strBuilder without METHOD CHAINING:
+let strBuilder2 = new StringBuilder("strbuilder");
+strBuilder2.plus(" new", "!");
+console.log(strBuilder2);
+strBuilder2.minus(4);
+console.log(strBuilder2);
+strBuilder2.multiply(3);
+console.log(strBuilder2);
+strBuilder2.divide(4);
+console.log(strBuilder2);
+strBuilder2.remove("b");
+console.log(strBuilder2);
+strBuilder2.sub(1, 1);
+console.log(strBuilder2);
+strBuilder2.get();
+console.log(strBuilder2);
